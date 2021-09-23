@@ -1,4 +1,6 @@
+// AOS js를 사용하기 위한 초기화
 AOS.init();
+// 메인 슬라이더 swiper js
 let swiper = new Swiper("#main_slider", {
   effect: "fade",
   loop: true,
@@ -32,6 +34,7 @@ let swiper = new Swiper("#main_slider", {
     },
   },
 });
+// 아이템 리스트 swiper js
 let swiper2 = new Swiper("#new_item_list", {
   slidesPerView: 1,
   spaceBetween: 30,
@@ -51,6 +54,7 @@ let swiper2 = new Swiper("#new_item_list", {
     },
   },
 });
+// 스와이퍼 내부에 마우스가 있을경우 자동적으로 넘어가지 않게 설정
 $(".swiper-slide").on("mouseover", function () {
   swiper.autoplay.stop();
 });
@@ -59,12 +63,15 @@ $(".swiper-slide").on("mouseout", function () {
 });
 
 let header_bool = false;
+// 문서내 이벤트를 위한 함수
 $(document).ready(function () {
+  // 브라우저 크기가 변경될때마다 체크해서 브라우저 크기를 계속 받아옴.
   let win_size = $(window).width();
   $(window).resize(function () {
     win_size = $(window).width();
     console.log(win_size);
   });
+  // 스크롤 할경우 스크롤값을 계속 받아, 스크롤 위치에 맞는 이벤트 적용
   $(this).scroll(function () {
     let user_scroll = window.pageYOffset;
     let sb_top = $("#best_review").offset().top;
@@ -85,6 +92,7 @@ $(document).ready(function () {
       header.css("background-color", "rgba(0,0,0,0)");
       header_bool = false;
     }
+    // 모바일 사이즈일경우에는 적용하지 않음
     if (win_size > 768) {
       if (
         sb_top < user_scroll &&
@@ -116,6 +124,7 @@ $(document).ready(function () {
       $(".sticky_box").removeClass("fixed");
     }
   });
+  // 모바일 검색 버튼
   $(".search > a").click(function () {
     event.preventDefault();
     $("#mobile_search_box").addClass("on");
@@ -123,6 +132,49 @@ $(document).ready(function () {
       .animate({ opacity: 0 }, 0, function () {})
       .animate({ opacity: 1 }, 500, function () {});
   });
+  // 메뉴 검색 버튼
+  $(".menu > a").click(function () {
+    event.preventDefault();
+
+    $("#mobile_menu").addClass("on");
+    menu_box_width = $("#mobile_menu > .menu_box").width();
+    $("#mobile_menu > .menu_box")
+      .animate({ left: -menu_box_width }, 0, function () {})
+      .animate({ opacity: 1 }, 200, function () {})
+      .animate({ left: 0 }, 100, function () {
+        $("#mobile_menu > .exit > div").addClass("active");
+        $("#mobile_menu > .menu_box").addClass("active");
+        MenuInit();
+        $("#mobile_menu > div > .menu > li")
+          .eq(0)
+          .css("background-color", "white")
+          .css("border-bottom", "none");
+        $("#mobile_menu > div > .menu_list > ul").eq(0).css("display", "block");
+      });
+  });
+  // 메뉴 닫기 버튼
+  $("#mobile_menu > .exit").click(function () {
+    menu_box_width = $("#mobile_menu > .menu_box").width();
+    $("#mobile_menu > .exit > div").removeClass("active");
+    $("#mobile_menu > .menu_box").remove("active");
+    $("#mobile_menu > .menu_box")
+      .animate({ left: 0 }, 0, function () {})
+      .animate({ left: -menu_box_width }, 100, function () {})
+      .animate({ opacity: 0 }, 500, function () {
+        $(this).parent().removeClass("on");
+      });
+  });
+  // 메뉴 내 카테고리 선택
+  $("#mobile_menu > div > .menu > li").click(function (index) {
+    MenuInit();
+    $(this).children("ul").css("display", "block");
+    $(this).css("border-bottom", "none");
+    $(this).css("background-color", "white");
+    $("#mobile_menu > div > .menu_list")
+      .children("." + $(this).attr("class"))
+      .css("display", "block");
+  });
+  // 검색 박스에서 외부 박스를 선택시 나갈수 있도록 함
   $("#mobile_search_box").click(function (e) {
     if ($(e.target).hasClass("on")) {
       $("#mobile_search_box")
@@ -133,7 +185,11 @@ $(document).ready(function () {
     }
   });
 });
-
+$(".top_btn").on("click", () => {
+  event.preventDefault();
+  $("html, body").animate({ scrollTop: 0 }, 300);
+});
+// marquee 이벤트
 $.each($(".marquee"), function (index, item) {
   const wrapper = $(".marquee_wrapper");
   const roller = $(item);
@@ -160,3 +216,8 @@ $.each($(".marquee"), function (index, item) {
     easing: "linear",
   });
 });
+function MenuInit() {
+  $("#mobile_menu > div > .menu_list").children("ul").css("display", "none");
+  $("#mobile_menu > div > .menu > li").css("background-color", "#f5f5f5");
+  $("#mobile_menu > div > .menu > li").css("border-bottom", "1px solid #ccc");
+}

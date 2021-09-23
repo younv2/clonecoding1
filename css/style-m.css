@@ -76,9 +76,112 @@ header > #mobile_search_box > .box > #search_text {
 header > #mobile_search_box > .box > #search_text:focus {
   outline: none;
 }
-header > #mobile_menu_box {
+header > #mobile_menu {
+  top: 0;
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+header > #mobile_menu > .exit {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  right: 20px;
+  top: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+header > #mobile_menu > .exit > div {
+  background-color: #707070;
+  position: absolute;
+  transform: rotate(0deg);
+  transition: all linear 0.3s;
+  width: 70%;
+  height: 2px;
+  top: 50%;
+  left: 7px;
+}
+header > #mobile_menu > .exit > div:first-child.active {
+  transform: rotate(45deg);
+}
+header > #mobile_menu > .exit > div:last-child.active {
+  transform: rotate(-45deg);
+}
+header > #mobile_menu > .menu_box {
+  transition: all linear 0.5s;
+  position: absolute;
+  background-color: #fff;
+  height: 100%;
+  width: 70%;
+}
+header > #mobile_menu > .menu_box > ul {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+}
+header > #mobile_menu > .menu_box > .lang {
+  margin: 20px 0 0 20px;
+}
+header > #mobile_menu > .menu_box > .lang > li {
+  margin-right: 5px;
+}
+header > #mobile_menu > .menu_box > .txt {
+  font-size: 11px;
+  text-align: center;
+  margin: 10px auto 30px;
+  font-weight: 400;
+}
+header > #mobile_menu > .menu_box > .login > li > a {
+  display: block;
+  height: 100%;
+}
+header > #mobile_menu > .menu_box > .login > li {
+  width: 50%;
+  height: 30px;
+  text-align: center;
+  border: #ccc solid 1px;
+  line-height: 30px;
+  font-family: "Noto Sans KR";
+  font-size: 13px;
+  font-weight: 400;
+}
+header > #mobile_menu > .menu_box > .login > li:not(:first-child) {
+  border-left: none;
+}
+header > #mobile_menu > .menu_box > .menu > li {
+  font-size: 12px;
+  font-weight: 400;
+  width: 50%;
+  background-color: #f5f5f5;
+  font-family: "Noto Sans KR";
+  text-align: center;
+  border: #ccc solid 1px;
+  padding: 10px 0;
+  cursor: pointer;
+}
+header > #mobile_menu > .menu_box > .menu > li:not(:first-child) {
+  border-left: none;
+}
+header > #mobile_menu > .menu_box > .menu > li > ul {
   display: none;
 }
+header > #mobile_menu > .menu_box > .menu_list {
+  width: 90%;
+  margin: 10px auto;
+  padding-left: 15px;
+  font-size: 12px;
+}
+header > #mobile_menu > .menu_box > .menu_list > ul {
+  display: none;
+}
+header > #mobile_menu > .menu_box > .menu_list > ul > li {
+  padding: 8px 0;
+}
+/* main */
+
 #main_slider div > .slide_txt > h2 {
   font-size: 36px;
   letter-spacing: 6px;
@@ -309,6 +412,9 @@ footer > .footer_wrapper > p {
   position: fixed !important;
 }
 #mobile_search_box.on {
+  display: flex;
+}
+#mobile_menu.on {
   display: flex;
 }
 @keyframes rotate_img {
